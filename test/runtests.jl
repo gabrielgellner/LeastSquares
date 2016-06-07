@@ -1,5 +1,14 @@
-using LeastSquares
-using Base.Test
+#
+# Correctness Tests
+#
 
-# write your own tests here
-@test 1 == 1
+using LsqFit
+
+my_tests = [ "curve_fit.jl"]
+
+println("Running tests:")
+
+for my_test in my_tests
+    println(" * $(my_test)")
+    include(my_test)
+end
