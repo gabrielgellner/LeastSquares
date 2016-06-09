@@ -1,7 +1,7 @@
 module LeastSquares
 
 export curve_fit, estimate_errors, estimate_covar
-export lsfit
+export lsfit, @funclist
 
 #using Optim
 using Calculus
