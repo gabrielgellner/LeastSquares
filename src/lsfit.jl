@@ -24,11 +24,20 @@ function lsfit(flist::Array{Function}, x::AbstractVector, y::AbstractVector)
     return LSFit(coef, fit)
 end
 
-# TODO: it would be cool to have a macro so that I could do
-# @funclist :x [:1, :x, :x^2]
-# and have it make the list of anon functions
-# Expr(:->, :x, Expr(:block, Expr(:call, :*, 2, :x)))
-# is the form of x -> 2*x
+"""
+    @funclist(var, flist)
+
+Generates a vector of anonymous functions that take `var` as an argument.
+
+# Examples
+```jl
+@funclist(x, [1, x, x^2])
+```
+returns
+```jl
+[x->1, x->x, x->x^2]
+```
+"""
 macro funclist(var, list)
     if  typeof(list) != Expr || list.head != :vect
         throw(ArgumentError("Only simple arrays are supported"))
