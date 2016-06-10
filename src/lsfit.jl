@@ -1,9 +1,9 @@
 type LSFit{T}
     coef::Vector{T}
-    fit::Function
+    fittedfunc::Function
 end
 
-call(t::LSFit, x) = t.fit(x)
+call(t::LSFit, x) = t.fittedfunc(x)
 
 """
     lsfit(flist, x, y)
@@ -13,7 +13,8 @@ function lsfit(flist::Array{Function}, x::AbstractVector, y::AbstractVector)
     # TODO: figure out a fast and generic way of doing this
     A = eltype(x)[f(xi) for xi in x, f in flist]
     coef = pinv(A)*y
-    # use a generated function to avoid the loop call each time you do a lookup
+    # use a generated function to avoid the loop call each time you do a lookup on .coef,
+    # check if this is really a speed optimization
     fit = @generated function fitted(x)
         eq = :(($coef[1]*$flist[1](x)))
         for i = 2:length(coef)
