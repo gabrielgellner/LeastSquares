@@ -30,11 +30,12 @@ end
 # Expr(:->, :x, Expr(:block, Expr(:call, :*, 2, :x)))
 # is the form of x -> 2*x
 macro funclist(var, list)
-    # flist = []
-    # for e in list
-    #     push!(flist, Expr(:->, var, Expr(:block, e)))
-    # end
-    # return flist
-    flist = Expr(:->, :var, Expr(:block, Expr(:call, :*, 2, :var)))
-    return flist
+    if  typeof(list) != Expr || list.head != :vect
+        throw(ArgumentError("Only simple arrays are supported"))
+    end
+    flist = []
+    for fi in list.args
+        push!(flist, Expr(:->, var, Expr(:block, fi)))
+    end
+    return Expr(:vect, flist...)
 end
