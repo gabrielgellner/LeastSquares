@@ -9,7 +9,7 @@ end
 
 #TODO: update this doc
 """
-	lmfig(f, p0; kwargs...)
+	lmfit(f, p0; kwargs...)
 
 this is a convenience function for the curve_fit() methods
 which assume f(p) is the cost functionj i.e. the residual of a
