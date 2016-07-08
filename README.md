@@ -1,4 +1,4 @@
-# LeastSquares
+# LeastSquares.jl
 
 To install, from the `julia` prompt:
 ```jl
